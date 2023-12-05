@@ -11,9 +11,9 @@ public class PlayingWithDrawingPanel {
         int step = 20;
         int size = step * 3;
         for (int x = 0; x <= height - size; x += step) {
-//            panel.clear();
+            panel.clear();
             g.drawRect(x, x, size, size);
-            panel.sleep(500);
+            panel.sleep(1);
         }
 //        g.drawOval(234, 77, 100, 100);
     }
