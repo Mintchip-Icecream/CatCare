@@ -1,11 +1,17 @@
 package main;
 
 import java.awt.event.*;
+import java.util.Random;
 
 
 public class ChoiceHandler {
     gamePlay gp;
     KeyHandler keyH;
+    boolean bowlGameStart = false;
+    boolean [] bowls = new boolean [4];
+
+    KeyHandler lastKeyH;
+    boolean buttonPress = false;
 
     public enum actiontype {
         a1, a2, a3, a4
@@ -26,12 +32,16 @@ public class ChoiceHandler {
         as=actionsecondary.asnone;
         if (gp.ui.nonDefaultState == true && gp.internalTimer > 10){
             if (keyH.a1Pressed == true) {
+                keyH.a1Pressed = false;
                 as = actionsecondary.as1;
             } else if (keyH.a2Pressed == true) {
+                keyH.a1Pressed = false;
                 as = actionsecondary.as2;
             } else if (keyH.a3Pressed == true) {
+                keyH.a1Pressed = false;
                 as = actionsecondary.as3;
             } else if (keyH.a4Pressed == true){
+                keyH.a1Pressed = false;
                 as = actionsecondary.as4;
             }
             inputPerformed();
@@ -68,6 +78,20 @@ public class ChoiceHandler {
     public void draw() {
     }
 
+    public void winBowlGame()
+    {
+        gp.catCoinStat = gp.catCoinStat + 5;
+        bowlGameStart = false;
+        System.out.println("Gain 5 coins");
+        System.out.println("Win Bowl game\n");
+    }
+    
+    public void loseBowlGame()
+    {
+        bowlGameStart = false;
+        System.out.println("Lose Bowl game\n");
+    }
+    
     public void inputPerformed() { //where all of the different key input scenarios go
         switch (at) {
                 case a1:System.out.println("a1 has activated the switch case");
@@ -84,8 +108,39 @@ public class ChoiceHandler {
                 case a3: System.out.println("a3 has activated the switch case");
 
                     break;
-                case a4: System.out.println("a4 has activated the switch case");
+                case a4: 
+                { 
+                    if(bowlGameStart == false)
+                    {
+                        switch (as){
+                            case as1:
+                            {
+                                bowlGameStart = true;
+                                Random random = new Random();
+                                bowls = new boolean [4]; 
+                                bowls [random.nextInt(3)] = true;
+                                System.out.println("Start Bowl game");
+
+                                break;
+                            }
+                        }
+                    }else
+                    {
+                        if(as != actionsecondary.asnone)
+                        {
+                            if(bowls[as.ordinal()] == true)
+                            {
+                                winBowlGame();
+                            }else{
+                                loseBowlGame();
+                            }
+                        }
+                    }
+                    
+                    
+                    
                     break;
+                }
             }
 
     }

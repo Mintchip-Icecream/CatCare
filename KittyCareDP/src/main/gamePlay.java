@@ -21,6 +21,7 @@ public class gamePlay implements Runnable{
     public int internalTimer = 0;
     public int animationTimer = 0;
     public int secondaryTimer = 0;
+    public int totalCoin = 0; 
 
     public gamePlay() {
         g2 = panel.getGraphics();
