@@ -37,7 +37,7 @@ public class Animations {
     public void idleAnimation(){
         try{
             idle1 = ImageIO.read(new File("src/res/idleCat/idleCat1.png"));
-            idle2 = ImageIO.read(new File("src/res/idleCat/idleCat3.png"));
+            idle2 = ImageIO.read(new File("src/res/idleCat/idleCat2.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
