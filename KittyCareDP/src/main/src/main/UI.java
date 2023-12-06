@@ -1,6 +1,7 @@
 package main;
 
 import main.*;
+import main.ChoiceHandler.gametype;
 
 import java.awt.*;
 import java.io.*;
@@ -47,7 +48,7 @@ public class UI {
         }
 
         if (nonDefaultState == true){ // container for all of the different choices
-            System.out.println("nonDefault State");
+            //System.out.println("nonDefault State");
             reassignButtons();
             for (int i = 0; i<4; i++) {
                 g2.setColor(Color.BLACK);
@@ -64,15 +65,32 @@ public class UI {
             }
         }
 
+        g2.setColor(Color.BLACK);
+        g2.drawString("Total coin :" +gp.catCoinStat,20, 30);
 
     }
     public void reassignButtons(){ //Reassignment for buttons
-        switch(gp.choice.at){
-            case a1: action[0] = "Pet";action[1] = "Brush";action[2] = "Feather";action[3] = "Laser";break;
-            case a2: action[0] = "Salmon";action[1] = "Beef";action[2] = "Chicken";action[3] = "Milk";break;
-            case a3: action[0] = "1 HR";action[1] = "2 HR";action[2] = "3 HR";action[3] = "";break;
-            case a4: action[0] = "Bowls";action[1] = "";action[2] = "";action[3] = "";break;
+        if(gp.choice.gameStart != gametype.noGame)
+        {
+            switch (gp.choice.gameStart) {
+                case bowl:
+                {
+                    action[0] = "Bowl 1";action[1] = "Bowl 2";action[2] = "Bowl 3";action[3] = "Bowl 4";
+                    break;
+                }
+                default:
+                    action[0] = "";action[1] = "";action[2] = "";action[3] = "";
+                    break;
+            }
+        }else
+        {
+            switch(gp.choice.at){
+                case a1: action[0] = "Pet";action[1] = "Brush";action[2] = "Feather";action[3] = "Laser";break;
+                case a2: action[0] = "Salmon";action[1] = "Beef";action[2] = "Chicken";action[3] = "Milk";break;
+                case a3: action[0] = "1 HR";action[1] = "2 HR";action[2] = "3 HR";action[3] = "";break;
+                case a4: action[0] = "Bowls";action[1] = "";action[2] = "";action[3] = "";break;
 
+            }
         }
     }
 

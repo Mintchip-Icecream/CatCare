@@ -7,11 +7,13 @@ import java.util.Random;
 public class ChoiceHandler {
     gamePlay gp;
     KeyHandler keyH;
-    boolean bowlGameStart = false;
-    boolean [] bowls = new boolean [4];
 
-    KeyHandler lastKeyH;
-    boolean buttonPress = false;
+    int winningBowl;
+
+    public enum gametype {
+        bowl, hold1, hold2, hold3, winGame, loseGame, loadGame,noGame
+    }
+    gametype gameStart;
 
     public enum actiontype {
         a1, a2, a3, a4
@@ -26,6 +28,7 @@ public class ChoiceHandler {
     public ChoiceHandler(gamePlay gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
+        this.gameStart = gametype.noGame;
     }
 
     public void update() {
@@ -81,17 +84,14 @@ public class ChoiceHandler {
     public void winBowlGame()
     {
         gp.catCoinStat = gp.catCoinStat + 5;
-        bowlGameStart = false;
-        System.out.println("Gain 5 coins");
-        System.out.println("Win Bowl game\n");
+        gameStart = gametype.winGame;
     }
     
     public void loseBowlGame()
     {
-        bowlGameStart = false;
-        System.out.println("Lose Bowl game\n");
+        gameStart = gametype.loseGame;
     }
-    
+
     public void inputPerformed() { //where all of the different key input scenarios go
         switch (at) {
                 case a1:System.out.println("a1 has activated the switch case");
@@ -110,25 +110,23 @@ public class ChoiceHandler {
                     break;
                 case a4: 
                 { 
-                    if(bowlGameStart == false)
+                    if(gameStart == gametype.noGame)
                     {
                         switch (as){
                             case as1:
                             {
-                                bowlGameStart = true;
+                                gameStart = gametype.bowl;
                                 Random random = new Random();
-                                bowls = new boolean [4]; 
-                                bowls [random.nextInt(3)] = true;
-                                System.out.println("Start Bowl game");
+                                winningBowl = random.nextInt(3) ;
 
                                 break;
                             }
                         }
-                    }else
+                    }else if(gameStart == gametype.bowl )
                     {
                         if(as != actionsecondary.asnone)
                         {
-                            if(bowls[as.ordinal()] == true)
+                            if(as.ordinal() == winningBowl)
                             {
                                 winBowlGame();
                             }else{
